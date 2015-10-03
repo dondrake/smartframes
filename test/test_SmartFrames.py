@@ -48,7 +48,7 @@ class ComplexTable(SmartFrames.SmartFrames):
         StructField("float2", FloatType()),
         StructField("byte", ByteType()),
         StructField("integer", IntegerType()),
-        StructField("long", LongType()),
+        StructField("along", LongType()),
         StructField("short", ShortType()),
         ],
         key = lambda x: x.name))
@@ -95,7 +95,7 @@ class TestSmartFrames(SparkTestCase):
         s1.float2 = 2.2
         s1.byte = 100
         s1.integer = 10000
-        s1.long = 10000
+        s1.along = 10000
         s1.short = 10
 
         df = self.sqlCtx.createDataFrame(self.sc.parallelize([s1.createRow()]), s1.schema)
@@ -119,7 +119,7 @@ class TestSmartFrames(SparkTestCase):
         #self.assertEquals(r1.float2, s1.float2)
         self.assertEquals(r1.byte, s1.byte)
         self.assertEquals(r1.integer, s1.integer)
-        self.assertEquals(r1.long, s1.long)
+        self.assertEquals(r1.along, s1.along)
         self.assertEquals(r1.short, s1.short)
 
 if __name__ == '__main__':
