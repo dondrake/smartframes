@@ -14,7 +14,7 @@
 
 
 from datetime import date, datetime
-from pyspark.sql.types import Row, StructType, StructField, IntegerType, StringType, TimestampType, DateType, DoubleType, ShortType, ByteType, BooleanType
+from pyspark.sql.types import Row, StructType, StructField, IntegerType, StringType, TimestampType, DateType, DoubleType, ShortType, ByteType, BooleanType, BinaryType, FloatType
 
 # Don Drake 
 # don@drakeconsulting.com
@@ -43,7 +43,7 @@ class SmartFrames(object):
                 val = int(val) if val is not None else None
                 #print "now Int", val, "name=", _structType.name
             elif _structType.dataType == TimestampType():
-                val = val
+                pass
             elif _structType.dataType == DateType():
                 if isinstance(val, str):
                     val = date.strptime(val, '%Y-%m-%d')
@@ -55,12 +55,16 @@ class SmartFrames(object):
                     raise Exception("cant convert to date:" + val)
             elif _structType.dataType == DoubleType():
                 val = float(val)
+            elif _structType.dataType == FloatType():
+                val = float(val)
             elif _structType.dataType == ShortType():
                 val = int(val)
             elif _structType.dataType == ByteType():
                 val = int(val)
             elif _structType.dataType == BooleanType():
-                val = val
+                pass
+            elif _structType.dataType == BinaryType():
+                pass
             else:
                 print "TYPE NOT FOUND, " + str(_structType) + "now string?"
             d[_structType.name] = val
