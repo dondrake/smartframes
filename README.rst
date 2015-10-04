@@ -14,7 +14,7 @@ The Row() object also allows you to reference the fields by name (e.g. myRow.fir
 Installation
 ------------
 
-.. code:: bash
+.. code::
     pip install smartframes
 
 
