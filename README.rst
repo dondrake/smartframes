@@ -18,7 +18,7 @@ Simply create a class that extends from SmartFrame and define the schema as a so
 
 The skipSelectedFields is a list of field names that you normally would not select when creating a select() statement.
 
-.. code::python
+::
     class SimpleTable(SmartFrames):
         schema = StructType( sorted(
             [
@@ -39,4 +39,5 @@ The skipSelectedFields is a list of field names that you normally would not sele
             s2.first_name = 'Dan'
             df = self.sqlCtx.createDataFrame(self.sc.parallelize([s1.createRow(), s2.create
     Row()]), s1.schema)
+
 
