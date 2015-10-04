@@ -11,6 +11,13 @@ This was written when creating Row()'s with Long datatypes and finding that Spar
 
 The Row() object also allows you to reference the fields by name (e.g. myRow.firstName), this allows you to create an object that can now be transformed into a Row() object.
 
+Installation
+------------
+
+.. code:: bash
+    pip install smartframes
+
+
 Example
 -------
 
