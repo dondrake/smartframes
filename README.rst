@@ -16,9 +16,8 @@ Example
 
 Simply create a class that extends from SmartFrame and define the schema as a sorted list of StructFields.  It's important that the schema is sorted as Spark gets upset if the Row() object is created with fields that are in a different order. Strange, but true.
 
-The skipSelectedFields is a list of field names that you normally would not select when creating a select() statement.
+The skipSelectedFields is a list of field names that you normally would not select when creating a select() statement. ::
 
-::
     class SimpleTable(SmartFrames):
         schema = StructType( sorted(
             [
@@ -37,7 +36,6 @@ The skipSelectedFields is a list of field names that you normally would not sele
             s2 = SimpleTable()
             s2.pk_id = 2
             s2.first_name = 'Dan'
-            df = self.sqlCtx.createDataFrame(self.sc.parallelize([s1.createRow(), s2.create
-    Row()]), s1.schema)
+            df = self.sqlCtx.createDataFrame(self.sc.parallelize([s1.createRow(), s2.createRow()]), s1.schema)
 
 
