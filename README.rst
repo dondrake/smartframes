@@ -15,6 +15,7 @@ Installation
 ------------
 
 .. code::
+
     pip install smartframes
 
 
