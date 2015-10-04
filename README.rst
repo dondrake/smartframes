@@ -18,6 +18,7 @@ Simply create a class that extends from SmartFrame and define the schema as a so
 
 The skipSelectedFields is a list of field names that you normally would not select when creating a select() statement.
 
+.. code::python
     class SimpleTable(SmartFrames):
         schema = StructType( sorted(
             [
