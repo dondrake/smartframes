@@ -1,3 +1,17 @@
+# Copyright 2015 Don Drake don@drakeconsulting.com
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 SmartFrames
 """
@@ -8,29 +22,16 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
-try:
-    from pypandoc import convert
-    read_md = lambda f: convert(f, 'rst')
-except ImportError:
-    print("warning: pypandoc module not found, could not convert Markdown to RST")
-    read_md = lambda f: open(f, 'r').read()
-
-# Get the long description from the README file
-#with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-#    long_description = f.read()
-#http://stackoverflow.com/questions/10718767/have-the-same-readme-both-in-markdown-and-restructuredtext
-long_description = read_md('README.md')
-
 setup(
     name='smartframes',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.0',
+    version='1.0.1',
 
     description='Enhanced Python Dataframes for Spark/PySpark',
-    long_description=long_description,
+    long_description=open("README.rst").read(),
 
     # The project's main homepage.
     url='https://github.com/dondrake/smartframes',
