@@ -13,7 +13,6 @@ The createRow() method will coerce any values into the correct data types, for e
 
 This was written when creating Row()'s with Long datatypes and finding that Spark did not handle converting integers as longs when passing values to the JVM.  I needed a consistent manner to create Row() for all of my DataFrames.
 
-The Row() object also allows you to reference the fields by name (e.g. myRow.firstName), this allows you to create an object that can now be transformed into a Row() object.
 
 Installation
 ------------
