@@ -7,6 +7,10 @@ Motivation
 
 Spark DataFrames provide a nice interface to datasets that have a schema.  Getting data from your code into a DataFrame in Python means creating a Row() object with field names and respective values.  Given that you already have a schema with data types per field, it would be nice to easily take an object that represents the row and create the Row() object automatically.
 
+Smartframes allow you to define a class by just creating the schema that represents the fields and datatypes.  You can then create an object and set the values like any other Python class.  When you are ready to store that in a DataFrame, just call the createRow() method.  
+
+The createRow() method will coerce any values into the correct data types, for example, if a field is defined as an IntegerType and the value set in the class is a String, it will attempt to convert the string to an Integer before creating the Row().
+
 This was written when creating Row()'s with Long datatypes and finding that Spark did not handle converting integers as longs when passing values to the JVM.  I needed a consistent manner to create Row() for all of my DataFrames.
 
 The Row() object also allows you to reference the fields by name (e.g. myRow.firstName), this allows you to create an object that can now be transformed into a Row() object.
