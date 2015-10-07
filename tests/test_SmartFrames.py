@@ -16,6 +16,8 @@ import sys
 import os
 import unittest
 import datetime
+import time
+from copy import deepcopy
 src_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(src_dir, '..'))
 
@@ -121,6 +123,36 @@ class TestSmartFrames(SparkTestCase):
         self.assertEquals(r1.integer, s1.integer)
         self.assertEquals(r1.along, s1.along)
         self.assertEquals(r1.short, s1.short)
+
+    def testComplexTableTiming(self):
+        s1 = ComplexTable()
+        s1.pk_id = 1
+        s1.string = 'abcdefghijklmnopqrstuvwxyz'
+        s1.binary = bytearray(b"0xDEADBEEF")
+        s1.boolean = True
+        s1.date = datetime.date(2015, 10, 3)
+        s1.time = datetime.datetime(2015, 10, 3, 14, 33)
+        s1.double1 = 1
+        s1.double2 = 2.2
+        s1.float1 = 1
+        s1.float2 = 2.2
+        s1.byte = 100
+        s1.integer = 10000
+        s1.along = 10000
+        s1.short = 10
+
+        numRows = 10000
+        rows = []
+        start = time.clock()
+        for n in xrange(numRows):
+            rows.append(deepcopy(s1.createRow()))
+        end = time.clock()
+        print "Duration for ", numRows, " is ", (end - start)
+        df = self.sqlCtx.createDataFrame(self.sc.parallelize(rows), s1.schema)
+        # duration for v.1.0.1 ~ 2.4 seconds for 10000 rows
+        # duration for v.1.1.0 ~ 1.6 seconds for 10000 rows
+        count = df.count()
+        self.assertEquals(count, numRows)
 
 if __name__ == '__main__':
     unittest.main()
