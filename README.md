@@ -52,3 +52,12 @@ The skipSelectedFields is a list of field names that you normally would not sele
             df = self.sqlCtx.createDataFrame(self.sc.parallelize([s1.createRow(), s2.createRow()]), s1.schema)
 
 
+Releases
+--------
+
+=======     =========   =============================
+Version     Date        Notes
+=======     =========   =============================
+1.1.0       10/6/2015   Performance improvements
+1.0.1       10/3/2015   First release of smartframes
+=======     =========   =============================
