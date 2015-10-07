@@ -23,6 +23,50 @@ class SmartFrames(object):
     schema = None
     skipSelectFields = []
 
+    _identity = lambda val: val
+
+    _String = lambda val: str(val) if val is not None else None
+
+    def _Integer(val):
+        #print "_Integer val=", val
+        if val == '':
+            val = None
+        val = int(val) if val is not None else None
+        return val
+
+    def _Date(val):
+        if isinstance(val, str):
+            val = date.strptime(val, '%Y-%m-%d')
+        elif isinstance(val, datetime):
+            val = val.date()
+        elif isinstance(val, date):
+            pass
+        else:
+            raise Exception("cant convert to date:" + val)
+        return val
+
+    _Float = lambda(val): float(val)
+
+    def _Long(val):
+        if val == '':
+            val = None
+        val = long(val) if val is not None else None
+        return val
+
+    _dispatchTable = {
+        StringType(): _String,
+        IntegerType(): _Integer,
+        TimestampType(): _identity,
+        DateType(): _Date,
+        DoubleType(): _Float,
+        FloatType(): _Float,
+        ShortType(): _Integer,
+        ByteType(): _Integer,
+        LongType(): _Long,
+        BooleanType(): _identity,
+        BinaryType(): _identity,
+    }
+
     def __init__(self):
         # initialize object values to be None
         for _structType in self.schema.fields:
@@ -33,42 +77,13 @@ class SmartFrames(object):
         for _structType in sorted(self.schema.fields):
             #print "_structType=", _structType
             val = self.__dict__[_structType.name]
-            #print "val=", val
-            if _structType.dataType == StringType():
-                val = str(val) if val is not None else None
-                #print "now String"
-            elif _structType.dataType == IntegerType():
-                if val == '':
-                    val = None
-                val = int(val) if val is not None else None
-                #print "now Int", val, "name=", _structType.name
-            elif _structType.dataType == TimestampType():
+            try:
+                func = self._dispatchTable[_structType.dataType]
+                val = func(val)
+            except KeyError:
+                print "Not found in dispatch ", _structType.dataType
+                print "val=", val
                 pass
-            elif _structType.dataType == DateType():
-                if isinstance(val, str):
-                    val = date.strptime(val, '%Y-%m-%d')
-                elif isinstance(val, datetime):
-                    val = val.date()
-                elif isinstance(val, date):
-                    pass
-                else:
-                    raise Exception("cant convert to date:" + val)
-            elif _structType.dataType == DoubleType():
-                val = float(val)
-            elif _structType.dataType == FloatType():
-                val = float(val)
-            elif _structType.dataType == ShortType():
-                val = int(val)
-            elif _structType.dataType == ByteType():
-                val = int(val)
-            elif _structType.dataType == LongType():
-                val = long(val)
-            elif _structType.dataType == BooleanType():
-                pass
-            elif _structType.dataType == BinaryType():
-                pass
-            else:
-                print "TYPE NOT FOUND, " + str(_structType) 
             d[_structType.name] = val
             
         #print "CONVERTED, d=", d
